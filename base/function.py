@@ -267,50 +267,29 @@ for n in g:
 	print(n)
 print("")
 
-#斐波那契数列
-def fib(n):
-	i,x,y=0,0,1
-	while i<n:
-		print(y)
-		i=i+1
-		x,y=y,x+y
-	return 'over'
-print(fib(5))
+#生成器
+#使用 isinstance()判断一个对象是否是 Iterable 对象
+print('[] is Iterable:' , isinstance([],Iterable))
+#可以被 next()函数调用并不断返回下一个值的对象称为迭代器：Iterator
+#生成器都是 Iterator 对象，但 list、 dict、 str 虽然是 Iterable，却不是Iterator
+from collections import Iterator
+print('[] is Iterator:',isinstance([],Iterator))
+#把 list、 dict、 str 等 Iterable 变成 Iterator 可以使用 iter()函数
+print('iter([]) is Iterator:',isinstance(iter([]),Iterator) ,"\n")
 
-def fib_man(n):
-	return fib_iter(n,0,1)
-
-def fib_iter(n,x,y):
-	if n==1:
-		return y
-	print(y)
-	return fib_iter(n-1,y,x+y)
-print(fib_man(5) , "\n")
-
-
-#杨辉三角
-def Ytriangle_List(n):
-	baseList = [1];
-	for i in range(n):		
-		print(baseList)
-		baseList = [1] + [baseList[x] + baseList[x-1] for x in range(1,len(baseList))] + [1]
-	return 'over'
-print(Ytriangle_List(10))
-
-#总感觉这个生成器用的略生硬
-def Y_g():
-	baseList = [1];
+#凡是可作用于 for 循环的对象都是 Iterable 类型；
+#凡是可作用于 next()函数的对象都是 Iterator 类型，它们表示一个惰性计算的序列；
+#集合数据类型如 list、 dict、 str 等是 Iterable 但不是 Iterator，不过可以通过 iter()函数获得一个 Iterator 对象
+def do_iter():
+	L = iter([1,3,5,7,9,0])
 	while True:
-		yield baseList
-		baseList = [1] + [baseList[x] + baseList[x-1] for x in range(1,len(baseList))] + [1]
-	
-
-def Ytriangle_g():
-	n = 0
-	for t in Y_g():
-		print(t)
-		n = n + 1
-		if n == 10:
+		try:
+			print(next(L))
+		except StopIteration:
 			break
-Ytriangle_g()
+do_iter()
 
+#高阶函数 把函数作为参数传入
+def add(x,y,f):
+	return f(x) + f(y)
+print('高阶函数:',add(-5,-5,abs))
