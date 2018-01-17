@@ -99,7 +99,6 @@ print(add_param_v2(),"\n")
 
 ##可变参数 传入的参数个数是可变的，可以是1个、2个到任意个，还可以是0个 => tuple
 def calc(*numbers):
-	print(numbers)
 	sum = 0
 	for n in numbers:
 		sum = sum + n * n
